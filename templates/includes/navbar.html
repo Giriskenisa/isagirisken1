@@ -1,0 +1,101 @@
+
+<style>
+    #rcorners1 {
+  border-radius: 25px;
+  background: #73AD21;
+}
+.button-badge {
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  position: relative;
+  display: inline-block;
+  border-radius: .2rem;
+  transition: all ease 0.4s;
+}
+
+.button-badge:hover {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -13px;
+  right: -20px;
+   font-size: 20px;
+    background-color: red;
+    border-radius: 100px;
+}
+
+.fa {
+  color: white;
+}
+.hover{
+
+}
+    .hover:hover{
+          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+
+    }
+</style>
+
+
+<nav id="rcorners1" class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+        <a class="navbar-brand" href="/makale/feed"><i class="fa fa-home w3-xxxlarge"></i></a>
+{% if request.user.is_authenticated %}
+      <a class="navbar-brand" href='/makale/dashboard'>{{ request.user.username }}</a>
+    {% else %}
+{% endif %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav ml-auto">
+          {% if request.user.is_authenticated %}
+                <li class="nav-item active">
+        <a  href="/makale/dashboard" style="margin-top: 15%" class="nav-link hover" title="Profil"><i class="fa fa-user w3-xxlarge"></i><span class="sr-only">(current)</span></a>
+      </li>
+              <li>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              </li>
+                 <li class="nav-item active">
+                  <a href="/makale/favoriler" class="nav-link hover" data-toggle="tooltip" title="Favoriye Eklediklerin"><i class="material-icons" style="color: #e83e8c; font-size: 40px;margin-top: 15%">favorite</i></a>
+              </li>
+               <li>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              </li>
+              {% if request.session.profil == True %}
+              <a class="nav-link"  href="{% url "user:profil_duzenle" %}" title="Profilini Düzenle"><i class="fa fa-cog" style="font-size: 35px;" aria-hidden="true"></i></a>
+                  {% else %}
+                  <a class="nav-link button-badge"  href="{% url "user:profil_duzenle" %}" title="Profilini Düzenle"><i class="fa fa-cog" style="font-size: 35px;" aria-hidden="true"></i><span class="badge alert">1</span></a>
+              {% endif %}
+              <li>
+
+              </li>
+               <li>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              </li>
+      <li class="nav-item active">
+        <a class="nav-link hover" style="color: red" href="/user/logout" title="Çıkış Yap"><i class="fa fa-sign-out" style="font-size:36px;color:red"></i></i> <span class="sr-only">(current)</span></a>
+      </li>
+
+
+      {% else %}
+               <li class="nav-item active">
+        <a class="nav-link" href="/user/register">Kayit Ol <span class="sr-only">(current)</span></a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link" href="/user/login">Giriş Yap <span class="sr-only">(current)</span></a>
+      </li>
+
+      {% endif %}
+
+      </ul>
+    {% comment %}<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>{% endcomment %}
+  </div>
+</nav>

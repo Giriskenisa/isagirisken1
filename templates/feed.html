@@ -1,0 +1,51 @@
+{% extends "Layout.html" %}
+{% block body %}
+
+
+      <form style="text-align: right">
+      {% csrf_token %}
+           <button type="submit" class="btn btn-default" style="float: right">
+<i class="material-icons">search</i>
+
+
+</button>
+   <input type="text" name="keyword" class="form-control" placeholder="Anı Ara..."  style="border-radius: 20px;float: right;width: 20%" aria-label="Search" >
+
+<br>
+      </form>
+    <header class="jumbotron my-4" style="border-radius: 20px">
+      <h1 class="display-3">SENDE BİZE KATIL!</h1>
+      <p class="lead">Burası aslında kişisel bir blog sayfasıydı. Fakat sizlerle daha güzel olacağını gördüm. Hadi bize katıl..</p>
+        {% if request.user.is_authenticated %}
+                 <a href="{% url "makale_ekle" %}" class="btn btn-primary btn-lg">Olay Anlat</a>
+            {% else %}
+             <a href="{% url "user:login"%}" class="btn btn-primary btn-lg">Olay Anlat</a>
+        {% endif %}
+    </header>
+             {% if paylasimlar %}
+                   <div class="row text-center">
+                 {% for paylasim in paylasimlar %}
+            <div class="col-lg-6 col-md-15 mb-2">
+                <div class="card h-100">
+                    <a href="detay/{{ paylasim.id}}" ><img class="card-img-top" style="width: 100%;height: 320px" src="{{ paylasim.makale_foto.url }}" alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">{{ paylasim.baslik }}</h4>
+            <p class="card-text">{{ paylasim.icerik|safe|truncatewords:10 }}</p>
+          </div>
+          <div class="card-footer">
+              <p style="text-align: left"><strong><a href="{% url "yazar_profil" paylasim.yazar %}">{{ paylasim.yazar }}</a> </strong><small> Paylaştı ({{ paylasim.yazilma_tarihi }}) </small></p>
+           <label style="float: left" title="Okunma Sayısı"><i class="fa fa-eye" style="font-size:24px;color:blue"></i>  {{ paylasim.viewed }}</label>
+           <button class="btn" style="float: left;font-size: 24px;margin-top: -3%"><i class="fas fa-smoking"></i> </button>
+              <a href="detay/{{ paylasim.id }}" class="btn btn-primary">Devamı..</a>&nbsp;&nbsp;&nsc;
+              <label style="float: right" data-toggle="tooltip" title="Favoriye eklenme sayısı"> {{ paylasim.like }} <i class="material-icons" style="color:blue;">favorite</i></label>
+          </div>
+        </div>
+           </div>
+                    {% endfor %}
+             {% else %}
+
+                 <div class="alert alert-danger" style="margin-left: 13px;width: 100%">Aradığınız Kriterde Bir Paylaşım Bulunmamaktadır.</div>
+             {% endif %}
+    </div>
+
+{% endblock %}

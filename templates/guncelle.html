@@ -1,0 +1,24 @@
+{% extends "Layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+      <h3>Blog Güncelle</h3>
+      <form method="post" enctype="multipart/form-data">
+            {% if makale.makale_foto %}
+          <img class="img-fluid rounded" src="{{ makale.makale_foto.url }}" alt="">
+              {% else %}
+              <div class="alert alert-danger">Fotoğraf Eklenmemiş</div>
+          {% endif %}
+          {% csrf_token %}
+           {{ form|crispy }}
+      <input type="submit" class="btn btn-info" style="width:100%" value="Kaydet">
+      </form>
+  </div>
+
+</div>
+{% endblock %}

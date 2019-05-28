@@ -1,0 +1,36 @@
+{% extends "Layout.html" %}
+
+{% block body %}
+  <h3 style="text-align: center">Favorilediklerin</h3>
+    {% if favoriler %}
+            <table class="table table-hover bg-primary">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Başlık</th>
+      <th scope="col">Yazar</th>
+      <th scope="col">Beğenme Tarih</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for fav in favoriler %}
+      <tr>
+          <th scope="row"><a href="/makale/detay/{{ fav.makale.id}}"> <img src="{{ fav.makale.makale_foto.url }}" style="width: 150px;height: 100px"></a> </th>
+          <td><a href="/makale/detay/{{ fav.makale.id }}" style="color:white">{{ fav.makale.baslik }}</a></td>
+      <td>{{ fav.makale.yazar }}</td>
+      <td>{{ fav.liked_date }}</td>
+      <td><a href="/makale/favori_sil/{{ fav.id }}" data-toggle="tooltip" title="Favorilerden Kaldır"><i class="fa fa-trash w3-xlarge" style="color: red"></i></a>
+</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+
+</table>
+
+     {% else %}
+        <div class="alert alert-danger">Favoriye Eklediğiniz Bir Anı Bulunmamaktadir.</div>
+    {% endif %}
+
+
+{% endblock %}

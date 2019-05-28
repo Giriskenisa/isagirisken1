@@ -1,0 +1,91 @@
+{% extends "Layout.html" %}
+
+
+
+{% block body %}
+    <div class="container">
+  <div class="row" style="background-color: steelblue;border-radius: 20px">
+    <div class="col">
+     {% if user.profil_foto %}
+          <img  class="" src="{{ user.profil_foto.url }}" style="height: 100%;width: 100%;border-radius: 50px;border: blue 2px solid;float: left">
+        {% else %}
+          <img  class="" src="\media\profil\userdefault.png" style="height: 80%;width: 80%;border-radius: 50px;border: blue 2px solid">
+    {% endif %}
+    </div>
+    <div class="col">
+    <ul style=" list-style-type:none; float: right" class="list-group">
+        {% if user.twitter_link %}
+         <li> <a href="https://www.twitter.com/{{ user.twitter_link }}" style="float: right" title="Yazarın Twitter Profili" target="_blank"><i class="fa fa-twitter" style="font-size:36px;color:dodgerblue"></i></a></li><br>
+        {% endif %}
+
+    {% if user.facebook_link %}
+     <li><a href="https://www.facebook.com/{{ user.facebook_link }}" style="float: right" title="Yazarın Facebook Profili" target="_blank"><i class="fa fa-facebook" style="font-size:36px;color:blue"></i></a></li><br>
+    {% endif %}
+
+    {% if user.instagram_link %}
+<li><a href="https://www.instagram.com/{{ user.instagram_link }}" style="float: right" title="Yazarın İnstagram Profili" target="_blank"><i class="fa fa-instagram" style="font-size:36px;color:deeppink"></i></a></li><br>
+    {% endif %}
+    </ul>
+    </div>
+  </div>
+
+
+    <br>
+    <br>
+
+
+
+<h3 style="text-align: center"> Kontrol Paneli</h3>
+    <hr>
+    <p>
+   <strong>{{ request.user.username }} </strong> <small> Hoş Geldin</small>
+    </p>
+    {% if makaleler %}
+        <h4 style="text-align: center">Paylaştığın Anıların</h4>
+    <br>
+
+  <a class="btn btn-info" style="text-align: right" href="/makale/makale_ekle/" title="Anı Ekle"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        <br>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-hover bg-primary" style="border-radius: 20px">
+  <thead style="border-radius: 20px">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Başlık</th>
+      <th scope="col">Yazar</th>
+      <th scope="col">Tarih</th>
+        <th scope="col">Güncelle</th>
+        <th scope="col">Sil</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for makale in makaleler %}
+      <tr>
+          <th scope="row"><a href="/makale/detay/{{ makale.id }}"><img src="{{ makale.makale_foto.url }}" style="width: 150px;height: 100px"> </a></th>
+          <td><a href="/makale/detay/{{ makale.id }}" style="color:white">{{ makale.baslik }}</a></td>
+      <td>{{ makale.yazar }}</td>
+      <td>{{ makale.yazilma_tarihi }}</td>
+      <td><a class="btn btn-warning" href="/makale/guncelle/{{ makale.id }}">Güncelle</a></td>
+      <td><a class="btn btn-danger" href="/makale/sil/{{ makale.id }}">Sil</a></td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+
+</table>
+
+        </div>
+    {% else %}
+
+        <div class="alert alert-danger">Henüz Bir Paylaşımınız Bulunmamaktadır...</div>
+        <a class="btn btn-info" style="text-align: right" href="/makale/makale_ekle/"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    {% endif %}
+
+
+    <br>
+    <br>
+    </div>
+
+{% endblock %}

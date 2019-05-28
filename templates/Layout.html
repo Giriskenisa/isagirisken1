@@ -1,0 +1,63 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <style>
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ana Sayfa</title>
+
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+     <!-- Bootstrap core CSS -->
+  <link  href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{% static "css/heroic-features.css" %} ">
+</head>
+<body>
+
+<div class="container" >
+<br>
+    {% include "includes/navbar.html" %}
+<br>
+<br>
+     {% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+{% block body %}
+
+
+{% endblock %}
+ <footer class="card-footer bg-dark" >
+    <div class="container">
+      <p class="m-0 text-center text-white">&copy; isagirisken.com</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+</div>
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+<script src="{% static "js/bootstrap.js" %}"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<br>
+<br>
+
+</body>
+
+</html>

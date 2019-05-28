@@ -1,0 +1,24 @@
+{% extends "Layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+      <h3>Blog Paylaş</h3>
+      <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+            {{ form.media }}
+           {{ form|crispy }}
+
+      <input type="submit" class="btn btn-info" style="width:100%" value="Kaydet">
+      </form>
+  </div>
+
+</div>
+
+
+
+{% endblock %}

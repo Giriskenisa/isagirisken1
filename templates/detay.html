@@ -1,0 +1,169 @@
+{% extends "Layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="row" style="background-color:lavender">
+
+<!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4" style="text-align: center">{{ makale.baslik }}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          <a href="{% url "yazar_profil" makale.yazar %}"><strong>{{ makale.yazar }}</strong></a><small> Tarafından Paylaşıldı...</small>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{ makale.yazilma_tarihi }}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="{{ makale.makale_foto.url }}" alt="">
+
+        <hr>
+
+        <!-- Post Content -->
+     <p class="lead" style="border-bottom:dodgerblue 2px solid;border-top: dodgerblue 2px solid">{{ makale.icerik|safe }}</p>
+        <hr>
+         {% if fav %}
+             <a href="/makale/like_makale/{{makale.id }}" style="float: right" title="Favorilere Eklenmiş">{{ makale.like }} <i class="material-icons" style="color: red">favorite</i></a>
+
+         {% else %}
+             <a href="/makale/like_makale/{{makale.id }}" style="float: right" title="Favorilerine Ekle">{{ makale.like }} <i class="material-icons">favorite</i></a>
+
+         {% endif %}
+
+      <br>
+      <br>
+
+        <h3 class="container" style="text-align: center">{{ makale.baslik }} adına Yorumlar</h3>
+      <br>
+      <hr>
+        {% for yorum in yorumlar %}
+          <div class="media mb-4">
+
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+                  <h5 class="mt-0">{{ yorum.yorum_sahibi }}</h5>
+              <div style="text-align: left"><small>{{ yorum.yorum_tarih }}</small>
+                  <br>
+           {{ yorum.yorum_text }}
+          </div>
+          </div>
+
+      {% if yorum.yorum_sahibi  ==  request.user  %}
+        <a href="{% url 'yorum_sil' yorum_id=yorum.id makale_id=makale.id %}" title="Yorumu Sil"><i class="fa fa-trash w3-xlarge" style="color:crimson;"></i></a>
+              {% endif %}
+        </div>
+        {% endfor %}
+      <br>
+         <div class="card my-4">
+          <h5 class="card-header">Yorum Yapın</h5>
+          <div class="card-body">
+            <form method="post" action="/makale/yorum_ekle/{{ makale.id }}">
+                {% csrf_token %}
+              <div class="form-group">
+                <textarea name ="yorum_icerik" class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Gönder</button>
+            </form>
+          </div>
+        </div>
+
+
+
+        <!-- Comment with nested comments -->
+ {% comment %}       <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">Commenter Name</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+            <div class="media mt-4">
+              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+              <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              </div>
+            </div>
+
+          </div>
+        </div>{% endcomment %}
+
+      </div>
+
+     {% comment %} <!-- Sidebar Widgets Column -->
+
+
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endcomment %}
+        <!-- Side Widget -->
+              <div class="col-md-3">
+        <div class="card my-4">
+          <h5 class="card-header">Yazar Hakkında</h5>
+          <div class="card-body">
+              <strong>{{ makale.yazar }}</strong> kullanıcı adlı kişi Posta Kurusuna <strong>{{ request.user.date_joined}}</strong>  tarihinde kayıt oldu.
+              Ve bugüne kadar <strong>{{ makale_sayisi }}</strong> Anısını paylaşarak duygularını ve düşüncelerini en samimi haliyle paylaştı.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+</div>
+{% endblock %}
